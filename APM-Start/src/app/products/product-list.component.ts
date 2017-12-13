@@ -52,7 +52,15 @@ export class ProductListComponent implements OnInit {
   ];
 
   performFilter(filterBy: string): IProduct[] {
-    return this.products.filter((product: IProduct) => product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+    return this.products.filter(
+      (product: IProduct) =>
+        product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1
+    );
+  }
+
+  onRatingClicked(message: string) {
+    console.log(message);
+    this.pageTitle = message;
   }
 
   toggleImage(): void {
