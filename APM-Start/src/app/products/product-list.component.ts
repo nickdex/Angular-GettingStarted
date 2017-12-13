@@ -12,7 +12,20 @@ export class ProductListComponent implements OnInit {
   imageWidth: number = 50;
   imageMargin: number = 2;
   showImage: boolean = false;
-  listFilter: string = 'cart';
+
+  _listFilter: string;
+  public get listFilter(): string {
+    return this._listFilter;
+  }
+  public set listFilter(value: string) {
+    this._listFilter = value;
+    this.filteredProducts = this._listFilter
+      ? this.performFilter(this.listFilter)
+      : this.products;
+  }
+
+  filteredProducts: IProduct[];
+
   products: IProduct[] = [
     {
       productId: 1,
@@ -37,6 +50,10 @@ export class ProductListComponent implements OnInit {
         'http://openclipart.org/image/300px/svg_to_png/58471/garden_cart.png'
     }
   ];
+
+  performFilter(filterBy: string): IProduct[] {
+    return this.products.filter((product: IProduct) => product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
+  }
 
   toggleImage(): void {
     this.showImage = !this.showImage;
